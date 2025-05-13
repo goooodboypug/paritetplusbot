@@ -5,7 +5,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from aiogram.utils import executor
 from aiogram.dispatcher.filters import Command
 
-BOT_TOKEN = os.getenv("8034356638:AAE-nSZmPPNP15dp5nSjS-qEYJHnxQ1J_8s")
+BOT_TOKEN = os.getenv("BOT_TOKEN")  # Используйте переменные окружения для безопасности
 
 logging.basicConfig(level=logging.INFO)
 
@@ -49,14 +49,23 @@ async def set_language(message: types.Message):
 
 @dp.message_handler()
 async def handle_questions(message: types.Message):
-    lang = user_lang.get(message.from_user.id, "ru")
+    lang = user_lang.get(message.from_user.id)
+    
+    if not lang:
+        await message.answer(messages["start"]["ru"], reply_markup=lang_kb)
+        return
+
     text = message.text.lower()
     if "билет" in text or "ticket" in text or "门票" in text:
         await message.answer(messages["buy_ticket"][lang])
     elif "сбор" in text or "meeting" in text or "集合" in text:
         await message.answer(messages["meeting_point"][lang])
     else:
-        await message.answer("Попробуйте задать вопрос иначе.")
+        await message.answer("Я вас не понял. Пожалуйста, задайте вопрос, связанный с экскурсиями.")
+
+if __name__ == "__main__":
+    executor.start_polling(dp, skip_updates=True)
+
 
 if __name__ == "__main__":
     executor.start_polling(dp, skip_updates=True)
