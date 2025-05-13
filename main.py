@@ -5,7 +5,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from aiogram.utils import executor
 from aiogram.dispatcher.filters import Command
 
-BOT_TOKEN = os.getenv("BOT_TOKEN")  # Используйте переменные окружения для безопасности
+BOT_TOKEN = os.getenv("8034356638:AAE-nSZmPPNP15dp5nSjS-qEYJHnxQ1J_8s")
 
 logging.basicConfig(level=logging.INFO)
 
